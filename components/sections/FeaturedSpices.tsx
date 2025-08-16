@@ -141,9 +141,7 @@ export default function FeaturedSpices() {
 
                   {/* Quick Actions */}
                   <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="w-10 h-10 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                      <Heart className="w-5 h-5 text-red-500" />
-                    </button>
+                    {/* Wishlist button removed - functionality not implemented yet */}
                   </div>
                 </div>
 

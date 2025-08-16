@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, User, Search, Heart } from 'lucide-react'
+import { Menu, X, User } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/components/providers/AuthProvider'
 import CartDropdown from './CartDropdown'
@@ -47,14 +47,6 @@ export default function Navigation() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <button className="p-2 text-white hover:text-unique-desi-spice-300 transition-colors">
-              <Search className="w-5 h-5" />
-            </button>
-            
-            <Link href="/wishlist" className="p-2 text-white hover:text-unique-desi-spice-300 transition-colors relative">
-              <Heart className="w-5 h-5" />
-            </Link>
-            
             <CartDropdown />
             
             {user ? (
