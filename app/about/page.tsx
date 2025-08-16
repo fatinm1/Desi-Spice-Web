@@ -123,33 +123,6 @@ export default function AboutPage() {
             </div>
           </motion.div>
 
-          {/* Stats Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            <div className="bg-gradient-to-br from-unique-desi-spice-100 to-saffron-100 dark:from-unique-desi-spice-900/30 dark:to-saffron-900/30 rounded-2xl p-8">
-              <div className="w-16 h-16 bg-unique-desi-spice-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white text-center mb-2">10,000+</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">Happy Customers</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-turmeric-100 to-saffron-100 dark:from-turmeric-900/30 dark:to-saffron-900/30 rounded-2xl p-8">
-              <div className="w-16 h-16 bg-turmeric-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Leaf className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white text-center mb-2">100%</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">Organic</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-basil-100 to-saffron-100 dark:from-basil-900/30 dark:to-saffron-900/30 rounded-2xl p-8">
-              <div className="w-16 h-16 bg-basil-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white text-center mb-2">25+</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">Countries Served</p>
-            </div>
-          </div>
-
           {/* Features Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
             <div>

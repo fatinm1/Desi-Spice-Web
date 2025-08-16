@@ -98,52 +98,6 @@ async function main() {
     })
   ])
 
-  // Create sample blog posts
-  const blogPosts = await Promise.all([
-    prisma.blogPost.create({
-      data: {
-        title: 'The Art of Spice Blending',
-        slug: 'art-of-spice-blending',
-        excerpt: 'Discover the secrets behind creating perfect spice blends for authentic Bangladeshi cuisine.',
-        content: 'Long form content about spice blending...',
-        author: 'Chef Rahman',
-        category: 'Cooking Tips',
-        image: '/images/blog/spice-blending.jpg',
-        isPublished: true,
-        isFeatured: true,
-        readTime: '5 min read'
-      }
-    }),
-    prisma.blogPost.create({
-      data: {
-        title: 'Health Benefits of Turmeric',
-        slug: 'health-benefits-turmeric',
-        excerpt: 'Explore the incredible health benefits of this golden spice from Bangladesh.',
-        content: 'Long form content about turmeric benefits...',
-        author: 'Dr. Ahmed',
-        category: 'Health & Wellness',
-        image: '/images/blog/turmeric-benefits.jpg',
-        isPublished: true,
-        isFeatured: false,
-        readTime: '4 min read'
-      }
-    }),
-    prisma.blogPost.create({
-      data: {
-        title: 'Traditional Spice Markets of Bangladesh',
-        slug: 'traditional-spice-markets-bangladesh',
-        excerpt: 'Take a journey through the vibrant spice markets of Chandpur and Dhaka.',
-        content: 'Long form content about spice markets...',
-        author: 'Travel Writer',
-        category: 'Culture & Travel',
-        image: '/images/blog/spice-markets.jpg',
-        isPublished: true,
-        isFeatured: false,
-        readTime: '6 min read'
-      }
-    })
-  ])
-
   // Create sample order
   const order = await prisma.order.create({
     data: {
@@ -232,7 +186,6 @@ async function main() {
   console.log(`👤 Created ${adminUser.email} (Admin)`)
   console.log(`👤 Created ${customerUser.email} (Customer)`)
   console.log(`🛍️ Created ${products.length} products`)
-  console.log(`📝 Created ${blogPosts.length} blog posts`)
   console.log(`📦 Created 1 order with items`)
   console.log(`⭐ Created sample reviews`)
   console.log(`📍 Created sample addresses`)
