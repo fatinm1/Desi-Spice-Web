@@ -2,15 +2,14 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ShoppingCart, User, Search, Heart } from 'lucide-react'
+import { Menu, X, User, Search, Heart } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/components/providers/AuthProvider'
-import { useCart } from '@/components/providers/CartProvider'
+import CartDropdown from './CartDropdown'
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, logout } = useAuth()
-  const { totalItems } = useCart()
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -56,14 +55,7 @@ export default function Navigation() {
               <Heart className="w-5 h-5" />
             </Link>
             
-            <Link href="/cart" className="p-2 text-white hover:text-unique-desi-spice-300 transition-colors relative">
-              <ShoppingCart className="w-5 h-5" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-unique-desi-spice-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
-            </Link>
+            <CartDropdown />
             
             {user ? (
               <div className="flex items-center gap-2">
@@ -107,7 +99,8 @@ export default function Navigation() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-gray-200/20 bg-black/20 backdrop-blur-md"
+              transition={{ duration: 0.3 }}
+              className="md:hidden border-t border-gray-200/20"
             >
               <div className="py-4 space-y-4">
                 {navItems.map((item) => (
@@ -115,55 +108,38 @@ export default function Navigation() {
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block text-white hover:text-unique-desi-spice-300 font-medium transition-colors px-4"
+                    className="block text-white hover:text-unique-desi-spice-300 font-medium transition-colors"
                   >
                     {item.name}
                   </Link>
                 ))}
                 
-                <div className="pt-4 border-t border-gray-200/20 space-y-4 px-4">
-                  <div className="flex items-center gap-4">
-                    <button className="p-2 text-white hover:text-unique-desi-spice-300 transition-colors">
-                      <Search className="w-5 h-5" />
-                    </button>
-                    <Link href="/wishlist" className="p-2 text-white hover:text-unique-desi-spice-300 transition-colors">
-                      <Heart className="w-5 h-5" />
-                    </Link>
-                    <Link href="/cart" className="p-2 text-white hover:text-unique-desi-spice-300 transition-colors relative">
-                      <ShoppingCart className="w-5 h-5" />
-                      {totalItems > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-unique-desi-spice-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                          {totalItems}
-                        </span>
-                      )}
-                    </Link>
-                  </div>
-                  
+                <div className="pt-4 border-t border-gray-200/20">
                   {user ? (
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <Link
                         href="/account"
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center gap-2 text-white hover:text-unique-desi-spice-300 transition-colors"
+                        className="block text-white hover:text-unique-desi-spice-300 font-medium transition-colors"
                       >
-                        <User className="w-5 h-5" />
-                        <span className="font-medium">{user.name}</span>
+                        Account
                       </Link>
                       <button
                         onClick={() => {
                           logout()
                           setIsMenuOpen(false)
                         }}
-                        className="text-white hover:text-unique-desi-spice-300 transition-colors"
+                        className="block text-white hover:text-unique-desi-spice-300 font-medium transition-colors"
                       >
                         Logout
                       </button>
                     </div>
                   ) : (
-                    <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/auth/login">
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => setIsMenuOpen(false)}
                         className="w-full bg-unique-desi-spice-500 hover:bg-unique-desi-spice-600 text-white px-6 py-3 rounded-full font-semibold transition-colors"
                       >
                         Sign In

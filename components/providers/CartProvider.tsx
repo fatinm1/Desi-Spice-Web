@@ -6,9 +6,12 @@ interface CartItem {
   id: string
   name: string
   price: number
+  originalPrice?: number
   quantity: number
   image: string
   weight: string
+  origin: string
+  category: string
 }
 
 interface CartContextType {
@@ -18,14 +21,26 @@ interface CartContextType {
   updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
   totalItems: number
-  totalPrice: number
+  subtotal: number
+  shipping: number
+  tax: number
+  total: number
+  discountCode: string
+  discountAmount: number
+  setDiscountCode: (code: string) => void
+  applyDiscount: () => void
+  isDiscountApplied: boolean
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [discountCode, setDiscountCode] = useState('')
+  const [discountAmount, setDiscountAmount] = useState(0)
+  const [isDiscountApplied, setIsDiscountApplied] = useState(false)
 
+  // Load cart from localStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('unique_desi_spice_cart')
     if (savedCart) {
@@ -38,6 +53,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
+  // Save cart to localStorage whenever items change
   useEffect(() => {
     localStorage.setItem('unique_desi_spice_cart', JSON.stringify(items))
   }, [items])
@@ -74,10 +90,36 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => {
     setItems([])
+    setDiscountCode('')
+    setDiscountAmount(0)
+    setIsDiscountApplied(false)
   }
 
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
-  const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  // Calculate totals
+  const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  
+  // Free shipping on orders over $50
+  const shipping = subtotal >= 50 ? 0 : 5.99
+  
+  // 8% tax rate
+  const tax = (subtotal + shipping) * 0.08
+  
+  // Apply discount if code is valid
+  const total = subtotal + shipping + tax - discountAmount
+
+  const applyDiscount = () => {
+    // Simple discount logic - you can expand this
+    if (discountCode.toLowerCase() === 'welcome10') {
+      setDiscountAmount(subtotal * 0.10)
+      setIsDiscountApplied(true)
+    } else if (discountCode.toLowerCase() === 'spice20') {
+      setDiscountAmount(subtotal * 0.20)
+      setIsDiscountApplied(true)
+    } else {
+      setDiscountAmount(0)
+      setIsDiscountApplied(false)
+    }
+  }
 
   const value = {
     items,
@@ -85,8 +127,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     removeItem,
     updateQuantity,
     clearCart,
-    totalItems,
-    totalPrice,
+    totalItems: items.reduce((sum, item) => sum + item.quantity, 0),
+    subtotal,
+    shipping,
+    tax,
+    total,
+    discountCode,
+    discountAmount,
+    setDiscountCode,
+    applyDiscount,
+    isDiscountApplied,
   }
 
   return (
