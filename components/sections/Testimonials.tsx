@@ -25,27 +25,6 @@ const testimonials = [
     role: 'Food Blogger',
     content: 'I love how Unique Desi Spice sources directly from farmers. The cumin seeds are so aromatic and fresh. Highly recommend!',
     rating: 5
-  },
-  {
-    id: 4,
-    name: 'Priya Patel',
-    role: 'Culinary Instructor',
-    content: 'Teaching cooking classes requires the best ingredients. Unique Desi Spice delivers exceptional quality every time.',
-    rating: 5
-  },
-  {
-    id: 5,
-    name: 'Hassan Ali',
-    role: 'Chef',
-    content: 'The black pepper from Unique Desi Spice has incredible depth of flavor. It\'s become a staple in my kitchen.',
-    rating: 5
-  },
-  {
-    id: 6,
-    name: 'Meera Singh',
-    role: 'Food Enthusiast',
-    content: 'I\'ve tried many spice brands, but Unique Desi Spice stands out for their authenticity and freshness.',
-    rating: 5
   }
 ]
 
