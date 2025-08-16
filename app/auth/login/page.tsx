@@ -139,17 +139,6 @@ export default function LoginPage() {
                     </Link>
                   </p>
                 </div>
-
-                {/* Demo Credentials */}
-                <div className="mt-6 p-4 bg-gray-50 dark:bg-slate-700 rounded-lg">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                    <strong>Demo Credentials:</strong>
-                  </p>
-                  <div className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
-                    <p>Admin: admin@uniquedesispice.com / admin123</p>
-                    <p>Customer: customer@example.com / customer123</p>
-                  </div>
-                </div>
               </form>
             </motion.div>
           </motion.div>
