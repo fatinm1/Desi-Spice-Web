@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('🌱 Starting database seed...')
+  console.log('🌱 Starting database seeding...')
 
   // Create admin user
   const adminUser = await prisma.user.upsert({
@@ -12,15 +12,9 @@ async function main() {
     update: {},
     create: {
       email: 'admin@uniquedesispice.com',
+      name: 'Admin User',
       password: await bcrypt.hash('admin123', 10),
-      role: 'ADMIN',
-      profile: {
-        create: {
-          firstName: 'Admin',
-          lastName: 'User',
-          phone: '+1234567890'
-        }
-      }
+      role: 'ADMIN'
     }
   })
 
@@ -30,15 +24,9 @@ async function main() {
     update: {},
     create: {
       email: 'customer@example.com',
+      name: 'John Doe',
       password: await bcrypt.hash('customer123', 10),
-      role: 'CUSTOMER',
-      profile: {
-        create: {
-          firstName: 'John',
-          lastName: 'Doe',
-          phone: '+1987654321'
-        }
-      }
+      role: 'CUSTOMER'
     }
   })
 
@@ -54,12 +42,10 @@ async function main() {
         origin: 'Chandpur, Bangladesh',
         category: 'Powders',
         isNew: true,
-        discount: 20,
         inStock: true,
-        rating: 4.8,
-        reviews: 124,
+        stockQuantity: 100,
         image: '/images/spices/tuemeric.webp',
-        stockQuantity: 100
+        images: ['/images/spices/tuemeric.webp']
       }
     }),
     prisma.product.create({
@@ -72,12 +58,10 @@ async function main() {
         origin: 'Dhaka, Bangladesh',
         category: 'Powders',
         isNew: false,
-        discount: 21,
         inStock: true,
-        rating: 4.6,
-        reviews: 89,
+        stockQuantity: 150,
         image: '/images/spices/chili.jpg',
-        stockQuantity: 150
+        images: ['/images/spices/chili.jpg']
       }
     }),
     prisma.product.create({
@@ -90,12 +74,10 @@ async function main() {
         origin: 'Chandpur, Bangladesh',
         category: 'Seeds',
         isNew: false,
-        discount: 23,
         inStock: true,
-        rating: 4.7,
-        reviews: 156,
+        stockQuantity: 80,
         image: '/images/spices/cumin.jpg',
-        stockQuantity: 80
+        images: ['/images/spices/cumin.jpg']
       }
     }),
     prisma.product.create({
@@ -108,12 +90,10 @@ async function main() {
         origin: 'Dhaka, Bangladesh',
         category: 'Whole Spices',
         isNew: false,
-        discount: 17,
         inStock: true,
-        rating: 4.6,
-        reviews: 203,
-        image: '/images/spices/blackpepper.jpeg',
-        stockQuantity: 120
+        stockQuantity: 120,
+        image: '/images/spices/black-pepper.jpg',
+        images: ['/images/spices/black-pepper.jpg']
       }
     })
   ])
@@ -123,92 +103,145 @@ async function main() {
     prisma.blogPost.create({
       data: {
         title: 'The Art of Spice Blending',
-        excerpt: 'Discover the secrets of creating perfect spice blends for authentic South Asian cuisine.',
-        content: 'Spice blending is an art that has been perfected over centuries...',
-        author: 'Unique Desi Spice Team',
-        publishedAt: new Date(),
+        slug: 'art-of-spice-blending',
+        excerpt: 'Discover the secrets behind creating perfect spice blends for authentic Bangladeshi cuisine.',
+        content: 'Long form content about spice blending...',
+        author: 'Chef Rahman',
         category: 'Cooking Tips',
-        readTime: '5 min read',
         image: '/images/blog/spice-blending.jpg',
-        tags: ['spices', 'cooking', 'blending', 'cuisine']
+        isPublished: true,
+        isFeatured: true,
+        readTime: '5 min read'
       }
     }),
     prisma.blogPost.create({
       data: {
         title: 'Health Benefits of Turmeric',
-        excerpt: 'Explore the incredible health benefits of this golden spice and how to incorporate it into your diet.',
-        content: 'Turmeric, also known as the golden spice, has been used for thousands of years...',
-        author: 'Unique Desi Spice Team',
-        publishedAt: new Date(),
+        slug: 'health-benefits-turmeric',
+        excerpt: 'Explore the incredible health benefits of this golden spice from Bangladesh.',
+        content: 'Long form content about turmeric benefits...',
+        author: 'Dr. Ahmed',
         category: 'Health & Wellness',
-        readTime: '7 min read',
         image: '/images/blog/turmeric-benefits.jpg',
-        tags: ['turmeric', 'health', 'benefits', 'wellness']
+        isPublished: true,
+        isFeatured: false,
+        readTime: '4 min read'
       }
     }),
     prisma.blogPost.create({
       data: {
-        title: 'Sourcing the Finest Spices',
-        excerpt: 'Learn about our journey to find and partner with the best spice farmers in Bangladesh.',
-        content: 'At Unique Desi Spice, we believe that quality begins at the source...',
-        author: 'Unique Desi Spice Team',
-        publishedAt: new Date(),
-        category: 'Our Story',
-        readTime: '6 min read',
-        image: '/images/blog/sourcing.jpg',
-        tags: ['sourcing', 'farmers', 'quality', 'bangladesh']
+        title: 'Traditional Spice Markets of Bangladesh',
+        slug: 'traditional-spice-markets-bangladesh',
+        excerpt: 'Take a journey through the vibrant spice markets of Chandpur and Dhaka.',
+        content: 'Long form content about spice markets...',
+        author: 'Travel Writer',
+        category: 'Culture & Travel',
+        image: '/images/blog/spice-markets.jpg',
+        isPublished: true,
+        isFeatured: false,
+        readTime: '6 min read'
       }
     })
   ])
 
-  // Create sample orders
-  const orders = await Promise.all([
-    prisma.order.create({
-      data: {
+  // Create sample order
+  const order = await prisma.order.create({
+    data: {
+      userId: customerUser.id,
+      status: 'CONFIRMED',
+      totalAmount: 35.98,
+      shippingAddress: '123 Main St, New York, NY 10001, USA',
+      billingAddress: '123 Main St, New York, NY 10001, USA',
+      paymentMethod: 'CREDIT_CARD',
+      paymentStatus: 'PAID'
+    }
+  })
+
+  // Create sample order items
+  await prisma.orderItem.createMany({
+    data: [
+      {
+        orderId: order.id,
+        productId: products[0].id,
+        quantity: 1,
+        price: 19.99
+      },
+      {
+        orderId: order.id,
+        productId: products[1].id,
+        quantity: 1,
+        price: 14.99
+      }
+    ]
+  })
+
+  // Create sample reviews
+  await prisma.review.createMany({
+    data: [
+      {
         userId: customerUser.id,
-        status: 'COMPLETED',
-        total: 54.97,
-        shippingAddress: {
-          street: '123 Main St',
-          city: 'New York',
-          state: 'NY',
-          zipCode: '10001',
-          country: 'USA'
-        },
-        items: {
-          create: [
-            {
-              productId: products[0].id,
-              quantity: 1,
-              price: 19.99
-            },
-            {
-              productId: products[1].id,
-              quantity: 1,
-              price: 14.99
-            },
-            {
-              productId: products[2].id,
-              quantity: 1,
-              price: 16.99
-            }
-          ]
-        }
+        productId: products[0].id,
+        rating: 5,
+        comment: 'Excellent quality turmeric powder!'
+      },
+      {
+        userId: customerUser.id,
+        productId: products[1].id,
+        rating: 4,
+        comment: 'Great chili powder, perfect heat level.'
       }
-    })
-  ])
+    ]
+  })
 
-  console.log('✅ Database seeded successfully!')
-  console.log(`👤 Admin user: admin@uniquedesispice.com / admin123`)
-  console.log(`👤 Customer user: customer@example.com / customer123`)
-  console.log(`🛍️  ${products.length} products created`)
-  console.log(`📝 ${blogPosts.length} blog posts created`)
-  console.log(`📦 ${orders.length} orders created`)
+  // Create sample addresses
+  await prisma.address.create({
+    data: {
+      userId: customerUser.id,
+      type: 'SHIPPING',
+      firstName: 'John',
+      lastName: 'Doe',
+      address1: '123 Main Street',
+      city: 'New York',
+      state: 'NY',
+      postalCode: '10001',
+      country: 'USA',
+      phone: '+1987654321',
+      isDefault: true
+    }
+  })
+
+  // Create sample newsletter subscription
+  await prisma.newsletter.create({
+    data: {
+      email: 'customer@example.com'
+    }
+  })
+
+  // Create sample contact message
+  await prisma.contact.create({
+    data: {
+      name: 'John Doe',
+      email: 'customer@example.com',
+      subject: 'Product Inquiry',
+      message: 'I would like to know more about your turmeric powder.',
+      status: 'PENDING'
+    }
+  })
+
+  console.log('✅ Database seeding completed successfully!')
+  console.log(`👤 Created ${adminUser.email} (Admin)`)
+  console.log(`👤 Created ${customerUser.email} (Customer)`)
+  console.log(`🛍️ Created ${products.length} products`)
+  console.log(`📝 Created ${blogPosts.length} blog posts`)
+  console.log(`📦 Created 1 order with items`)
+  console.log(`⭐ Created sample reviews`)
+  console.log(`📍 Created sample addresses`)
+  console.log(`📧 Created sample newsletter and contact`)
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Error seeding database:', e)
+    console.error('❌ Error during seeding:', e)
     process.exit(1)
   })
   .finally(async () => {
