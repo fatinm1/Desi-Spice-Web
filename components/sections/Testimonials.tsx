@@ -7,9 +7,8 @@ import { Star, Quote } from 'lucide-react'
 const testimonials = [
   {
     id: 1,
-    name: 'Priya Patel',
+    name: 'Aisha Rahman',
     role: 'Home Chef',
-    image: '/testimonials/priya.jpg',
     content: 'The quality of Unique Desi Spice spices is unmatched! Their turmeric has transformed my cooking and the cardamom is absolutely divine.',
     rating: 5
   },
@@ -17,7 +16,6 @@ const testimonials = [
     id: 2,
     name: 'Rajesh Kumar',
     role: 'Restaurant Owner',
-    image: '/testimonials/rajesh.jpg',
     content: 'As a restaurant owner, I need consistent quality. Unique Desi Spice never disappoints. Their saffron is the real deal!',
     rating: 5
   },
@@ -25,15 +23,35 @@ const testimonials = [
     id: 3,
     name: 'Fatima Ahmed',
     role: 'Food Blogger',
-    image: '/testimonials/fatima.jpg',
     content: 'I love how Unique Desi Spice sources directly from farmers. The cumin seeds are so aromatic and fresh. Highly recommend!',
+    rating: 5
+  },
+  {
+    id: 4,
+    name: 'Priya Patel',
+    role: 'Culinary Instructor',
+    content: 'Teaching cooking classes requires the best ingredients. Unique Desi Spice delivers exceptional quality every time.',
+    rating: 5
+  },
+  {
+    id: 5,
+    name: 'Hassan Ali',
+    role: 'Chef',
+    content: 'The black pepper from Unique Desi Spice has incredible depth of flavor. It\'s become a staple in my kitchen.',
+    rating: 5
+  },
+  {
+    id: 6,
+    name: 'Meera Singh',
+    role: 'Food Enthusiast',
+    content: 'I\'ve tried many spice brands, but Unique Desi Spice stands out for their authenticity and freshness.',
     rating: 5
   }
 ]
 
 export default function Testimonials() {
   return (
-    <section className="py-20 bg-gradient-to-br from-basil-50 via-white to-turmeric-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <section className="py-20 bg-gradient-to-br from-saffron-50 via-white to-turmeric-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -42,15 +60,15 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            What Our Customers Say
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+            <span className="spice-gradient-text">What Our Customers Say</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Don't just take our word for it. Here's what our valued customers have to say about their Unique Desi Spice experience.
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Discover why chefs, home cooks, and food enthusiasts choose Unique Desi Spice for their culinary adventures
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -73,11 +91,11 @@ export default function Testimonials() {
               </p>
               
               <div className="flex items-center gap-4">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
+                <div className="w-12 h-12 bg-gradient-to-br from-unique-desi-spice-100 to-saffron-100 dark:from-unique-desi-spice-900/30 dark:to-saffron-900/30 rounded-full flex items-center justify-center">
+                  <span className="text-unique-desi-spice-600 dark:text-unique-desi-spice-400 font-semibold text-lg">
+                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
                 <div>
                   <h4 className="font-semibold text-gray-800 dark:text-white">{testimonial.name}</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
